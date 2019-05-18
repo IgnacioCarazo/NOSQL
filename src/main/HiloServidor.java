@@ -3,6 +3,7 @@ package main;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Vector;
 
 
@@ -43,6 +44,8 @@ public class HiloServidor extends Thread {
                 stringRecibida = (String) canalEntradaServidor.readObject(); //Objeto serealizado
                 this.paquete1 = JSON.deserealizar(stringRecibida);
                 accion();
+                paquete1.listaEsquemas = ServidorGUI.esquemasCreados;
+
 
                 BD.guardarDatos(paquete1);
 
@@ -79,18 +82,47 @@ public class HiloServidor extends Thread {
 
         if (paquete1.accion.equals("CREAR_ESQUEMA")){
             // Se crea un nuevo objeto esquema con su respectivo nombre\
-            System.out.println("Antes de insercion");
-            ServidorGUI.esquemasCreados.imprimirListaEnlazada();
-            System.out.println();
             Esquema nuevoEsquema = new Esquema(paquete1.esquema);
             // Agrega el esquema creado a la base de datos en la que se encuentran todos los esquemas
+
+            Atributo atributo = new Atributo();
+//            Atributo atributo2 = new Atributo();
+            atributo.tipo = "Integer";
+//            atributo2.tipo = "String";
+//            nuevoEsquema.Columnas.put("Nombre",atributo2);
+            nuevoEsquema.Columnas.put(paquete1.nombreID, atributo);
+
+//            Atributo atributoint1 = new Atributo();
+//            Atributo atributostring1 = new Atributo();
+//            Atributo atributoint2 = new Atributo();
+//            Atributo atributostring2 = new Atributo();
+
+//            HashMap<String, Atributo> hashMap1 = (HashMap<String, Atributo>) nuevoEsquema.Columnas.clone();
+//            System.out.println(hashMap1.get(paquete1.nombreID).tipo);
+//            atributoint1.valueInt = 117398435;
+//            atributoint1.tipo = "Integer";
+//            atributostring1.valueString = "Jarod";
+//            atributostring1.tipo = "String";
+//            hashMap1.replace(paquete1.nombreID, atributoint1);
+//            hashMap1.replace("Nombre",atributostring1);
+
+//            HashMap<String, Atributo> hashMap2 = (HashMap<String, Atributo>) nuevoEsquema.Columnas.clone();
+//            System.out.println(hashMap2.get(paquete1.nombreID).tipo);
+//            atributoint2.valueInt = 117370693;
+//            atributoint2.tipo = "Integer";
+//            atributostring2.valueString = "Nacho";
+//            atributostring2.tipo = "String";
+//            hashMap2.replace(paquete1.nombreID, atributoint2);
+//            hashMap2.replace("Nombre",atributostring2);
+//
+
+//            nuevoEsquema.Datos.agregarInicio(hashMap1);
+//            nuevoEsquema.Datos.agregarInicio(hashMap2);
+
             ServidorGUI.esquemasCreados.agregarInicio(nuevoEsquema);
 
-            System.out.println("ListaEsquemasServidorGUI");
-            ServidorGUI.esquemasCreados.imprimirListaEnlazada();
-            paquete1.listaEsquemas = ServidorGUI.esquemasCreados;
-            System.out.println("ListaEsquemas");
-            paquete1.listaEsquemas.imprimirListaEnlazada();
+
+
 
         }
 
@@ -102,15 +134,22 @@ public class HiloServidor extends Thread {
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
             //Cambia el nombre del esquema al nombre que se quiere cambiar
             esquema.nombreEsquema = paquete1.esquemaNuevoNombre;
+
         }
         if(paquete1.accion.equals("ELIMINAR_ESQUEMA")){
             //Busca en la lista de esquemasCreados, el esquema por medio de su atributo nombreEsquema
             // Al encontrarlo, elimina ese nodo de la lista enlazada
-            ServidorGUI.esquemasCreados.eliminarEsquema(paquete1.esquemaPorBorrar);
+            Esquema esquema = ServidorGUI.esquemasCreados.getFirst().getDato();
+            if (esquema.nombreEsquema.equals(paquete1.esquemaPorBorrar)){
+                ServidorGUI.esquemasCreados.eliminarEsquemaInicial();
+            }else{
+                ServidorGUI.esquemasCreados.eliminarEsquema(paquete1.esquemaPorBorrar);
+            }
         }
 
         if(paquete1.accion.equals("CREAR_ATRIBUTO")){
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
+
             // Asi sabe sobre que esquema debe trabajar
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
             //Crea un atributo de "x" esquema, con su key: String y su value: Atributo

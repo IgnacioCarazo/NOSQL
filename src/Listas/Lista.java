@@ -129,6 +129,10 @@ public class Lista<T> {
         }
         tmp.next = tmp.next.next;
     }
+    public void eliminarEsquemaInicial(){
+        Nodo tmp = first;
+        first = first.next;
+    }
 
     public void eliminarInstancia(String columna, Integer ID){
         Nodo tmp = first;
