@@ -81,60 +81,27 @@ public class HiloServidor extends Thread {
     public void accion(){
 
         if (paquete1.accion.equals("CREAR_ESQUEMA")){
+            if (!ServidorGUI.esquemasCreados.esquemaRepetido(paquete1.esquema)){
             // Se crea un nuevo objeto esquema con su respectivo nombre\
             Esquema nuevoEsquema = new Esquema(paquete1.esquema);
             // Agrega el esquema creado a la base de datos en la que se encuentran todos los esquemas
 
             Atributo atributo = new Atributo();
-//            Atributo atributo2 = new Atributo();
-            atributo.tipo = "Integer";
-//            atributo2.tipo = "String";
-//            nuevoEsquema.Columnas.put("Nombre",atributo2);
             nuevoEsquema.Columnas.put(paquete1.nombreID, atributo);
-
-//            Atributo atributoint1 = new Atributo();
-//            Atributo atributostring1 = new Atributo();
-//            Atributo atributoint2 = new Atributo();
-//            Atributo atributostring2 = new Atributo();
-
-//            HashMap<String, Atributo> hashMap1 = (HashMap<String, Atributo>) nuevoEsquema.Columnas.clone();
-//            System.out.println(hashMap1.get(paquete1.nombreID).tipo);
-//            atributoint1.valueInt = 117398435;
-//            atributoint1.tipo = "Integer";
-//            atributostring1.valueString = "Jarod";
-//            atributostring1.tipo = "String";
-//            hashMap1.replace(paquete1.nombreID, atributoint1);
-//            hashMap1.replace("Nombre",atributostring1);
-
-//            HashMap<String, Atributo> hashMap2 = (HashMap<String, Atributo>) nuevoEsquema.Columnas.clone();
-//            System.out.println(hashMap2.get(paquete1.nombreID).tipo);
-//            atributoint2.valueInt = 117370693;
-//            atributoint2.tipo = "Integer";
-//            atributostring2.valueString = "Nacho";
-//            atributostring2.tipo = "String";
-//            hashMap2.replace(paquete1.nombreID, atributoint2);
-//            hashMap2.replace("Nombre",atributostring2);
-//
-
-//            nuevoEsquema.Datos.agregarInicio(hashMap1);
-//            nuevoEsquema.Datos.agregarInicio(hashMap2);
-
             ServidorGUI.esquemasCreados.agregarInicio(nuevoEsquema);
-
-
-
-
+            }
         }
 
 
 
         if(paquete1.accion.equals("MODIFICAR_ESQUEMA")){
-            // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
-            // Asi sabe sobre que esquema debe trabajar
-            Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
-            //Cambia el nombre del esquema al nombre que se quiere cambiar
-            esquema.nombreEsquema = paquete1.esquemaNuevoNombre;
-
+            if (!ServidorGUI.esquemasCreados.esquemaRepetido(paquete1.esquemaNuevoNombre)){
+                // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
+                // Asi sabe sobre que esquema debe trabajar
+                Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
+                //Cambia el nombre del esquema al nombre que se quiere cambiar
+                esquema.nombreEsquema = paquete1.esquemaNuevoNombre;
+            }
         }
         if(paquete1.accion.equals("ELIMINAR_ESQUEMA")){
             //Busca en la lista de esquemasCreados, el esquema por medio de su atributo nombreEsquema
@@ -149,21 +116,24 @@ public class HiloServidor extends Thread {
 
         if(paquete1.accion.equals("CREAR_ATRIBUTO")){
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
-
             // Asi sabe sobre que esquema debe trabajar
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
             //Crea un atributo de "x" esquema, con su key: String y su value: Atributo
-            esquema.Columnas.put(paquete1.nombreColumna, paquete1.columnaPorCrear);
+            if (!esquema.Columnas.containsKey(paquete1.nombreColumna)) {
+                esquema.Columnas.put(paquete1.nombreColumna, paquete1.columnaPorCrear);
+            }
         }
         if(paquete1.accion.equals("MODIFICAR_ATRIBUTO")){
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
             // Asi sabe sobre que esquema debe trabajar
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
-            // Mete a las columnas un nuevo key/value. Este tiene un nuevo nombre pero el mismo valor
-            // que el key que se quiere modificar
-            esquema.Columnas.put(paquete1.columnaNuevoNombre, esquema.Columnas.get(paquete1.nombreColumna));
-            // Se elimina el key/value que se queria modificar.
-            esquema.Columnas.remove(paquete1.nombreColumna);
+            if (!esquema.Columnas.containsKey(paquete1.columnaNuevoNombre)) {
+                // Mete a las columnas un nuevo key/value. Este tiene un nuevo nombre pero el mismo valor
+                // que el key que se quiere modificar
+                esquema.Columnas.put(paquete1.columnaNuevoNombre, esquema.Columnas.get(paquete1.nombreColumna));
+                // Se elimina el key/value que se queria modificar.
+                esquema.Columnas.remove(paquete1.nombreColumna);
+            }
         }
         if(paquete1.accion.equals("ELIMINAR_ATRIBUTO")){
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"

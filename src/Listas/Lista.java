@@ -109,6 +109,20 @@ public class Lista<T> {
         return null;
     }
 
+    public boolean esquemaRepetido(String esquemaPorRevisar){
+        Nodo tmp = first;
+        Esquema esquema = null;
+        while (tmp != null) {
+            esquema = (Esquema) tmp.getDato();
+            if (esquemaPorRevisar.equals(esquema.nombreEsquema)) {
+                return true;
+            } else {
+                tmp = tmp.getNext();
+            }
+        }
+        return false;
+    }
+
     public Lista duplicarLista(Lista<T> listaADuplicar){
         Nodo<T> tempNodo = listaADuplicar.getFirst();
         Lista<T> nuevaLista = new Lista<T>();
