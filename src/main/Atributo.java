@@ -4,11 +4,15 @@ public class Atributo {
     public double valueDouble;
     public int valueInt;
     public String valueString;
+
     public String tipo;
     public Boolean llave;
+
+    public String tipoArbol;
+
     public Boolean esJoin;
     public String esquemaJoin;
-    public Atributo columnaJoin;
+    public String columnaJoin;
 
     public void setTipo(String tipo) {
         this.tipo = tipo;

@@ -1,5 +1,6 @@
 package Listas;
 
+import main.Atributo;
 import main.Esquema;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -143,7 +144,7 @@ public class Lista<T> {
         }
         tmp.next = tmp.next.next;
     }
-    public void eliminarEsquemaInicial(){
+    public void eliminarInicial(){
         Nodo tmp = first;
         first = first.next;
     }
@@ -165,6 +166,26 @@ public class Lista<T> {
         while (tmp != null) {
             hashmap = (HashMap) tmp.getDato();
             hashmap.remove(columna);
+            tmp = tmp.getNext();
+
+        }
+    }
+    public void editarColumna(String columna,String nuevaColumna, Atributo atributo) {
+        Nodo tmp = first;
+        HashMap<String, Atributo> hashmap = null;
+        while (tmp != null) {
+            hashmap = (HashMap) tmp.getDato();
+            if (hashmap.get(columna).tipo.equals("Integer")){
+                atributo.valueInt = hashmap.get(columna).valueInt;
+            } else if (hashmap.get(columna).tipo.equals("String")){
+                atributo.valueString = hashmap.get(columna).valueString;
+            } else {
+                atributo.valueDouble = hashmap.get(columna).valueDouble;
+            }
+            hashmap.put(nuevaColumna,atributo);
+            hashmap.remove(columna);
+            tmp = tmp.getNext();
+
         }
     }
     public Lista() {

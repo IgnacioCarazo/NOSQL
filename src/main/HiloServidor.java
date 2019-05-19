@@ -108,7 +108,7 @@ public class HiloServidor extends Thread {
             // Al encontrarlo, elimina ese nodo de la lista enlazada
             Esquema esquema = ServidorGUI.esquemasCreados.getFirst().getDato();
             if (esquema.nombreEsquema.equals(paquete1.esquemaPorBorrar)){
-                ServidorGUI.esquemasCreados.eliminarEsquemaInicial();
+                ServidorGUI.esquemasCreados.eliminarInicial();
             }else{
                 ServidorGUI.esquemasCreados.eliminarEsquema(paquete1.esquemaPorBorrar);
             }
@@ -130,7 +130,8 @@ public class HiloServidor extends Thread {
             if (!esquema.Columnas.containsKey(paquete1.columnaNuevoNombre)) {
                 // Mete a las columnas un nuevo key/value. Este tiene un nuevo nombre pero el mismo valor
                 // que el key que se quiere modificar
-                esquema.Columnas.put(paquete1.columnaNuevoNombre, esquema.Columnas.get(paquete1.nombreColumna));
+                esquema.Columnas.put(paquete1.columnaNuevoNombre, paquete1.columnaPorCrear);
+                esquema.Datos.editarColumna(paquete1.nombreColumna,paquete1.columnaNuevoNombre,paquete1.columnaPorCrear);
                 // Se elimina el key/value que se queria modificar.
                 esquema.Columnas.remove(paquete1.nombreColumna);
             }
