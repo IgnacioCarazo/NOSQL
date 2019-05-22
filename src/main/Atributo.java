@@ -1,14 +1,21 @@
 package main;
 
+import Arboles.ArbolAVL;
+import Arboles.ArbolR_N;
+import Arboles.BinaryTree;
+
 public class Atributo {
     public double valueDouble;
-    public int valueInt;
+    public Integer valueInt;
     public String valueString;
 
     public String tipo;
     public Boolean llave;
 
     public String tipoArbol;
+    public ArbolAVL arbolAVL;
+    public ArbolR_N arbolR_N;
+    public BinaryTree binaryTree;
 
     public Boolean esJoin;
     public String esquemaJoin;

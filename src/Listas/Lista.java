@@ -95,6 +95,22 @@ public class Lista<T> {
             tmp = tmp.getNext();
         }
     }
+    // Obtiene un hashmap en especifico a partir de su ID de la lista de Datos
+    public HashMap obtenerHashmap(Integer ID, String nombreID){
+        Nodo tmp = first;
+        HashMap<String, Atributo> hashmap = null;
+        while (tmp != null) {
+            hashmap = (HashMap) tmp.getDato();
+            if (hashmap.get(nombreID).valueInt != null){
+                if (ID == hashmap.get(nombreID).valueInt){
+                    return hashmap;
+                } else{
+                    tmp = tmp.getNext();
+                }
+            }
+        }
+       return null;
+    }
     //Obtiene un esquema de la listaEsquemas a partir de su nombre de la lista de Esquemas
     public Esquema obtenerEsquema(String esquemaPorObtener) {
         Nodo tmp = first;

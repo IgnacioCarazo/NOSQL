@@ -1,6 +1,10 @@
 package main;
 
 
+import Arboles.ArbolAVL;
+import Arboles.ArbolR_N;
+import Arboles.BinaryTree;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
@@ -85,9 +89,14 @@ public class HiloServidor extends Thread {
             // Se crea un nuevo objeto esquema con su respectivo nombre\
             Esquema nuevoEsquema = new Esquema(paquete1.esquema);
             // Agrega el esquema creado a la base de datos en la que se encuentran todos los esquemas
-
-            Atributo atributo = new Atributo();
-            nuevoEsquema.Columnas.put(paquete1.nombreID, atributo);
+                if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolBinario")){
+                    paquete1.columnaPorCrear.binaryTree = new BinaryTree();
+                } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolAVL")){
+                    paquete1.columnaPorCrear.arbolAVL = new ArbolAVL();
+                } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolR_N")){
+                    paquete1.columnaPorCrear.arbolR_N =  new ArbolR_N();
+                }
+            nuevoEsquema.Columnas.put(paquete1.nombreID, paquete1.columnaPorCrear);
             ServidorGUI.esquemasCreados.agregarInicio(nuevoEsquema);
             }
         }
@@ -120,6 +129,16 @@ public class HiloServidor extends Thread {
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
             //Crea un atributo de "x" esquema, con su key: String y su value: Atributo
             if (!esquema.Columnas.containsKey(paquete1.nombreColumna)) {
+                if (paquete1.columnaPorCrear.tipo.equals("Integer")) {
+                    if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolBinario")) {
+                        paquete1.columnaPorCrear.binaryTree = new BinaryTree();
+                    } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolAVL")) {
+                        paquete1.columnaPorCrear.arbolAVL = new ArbolAVL();
+                        paquete1.columnaPorCrear.arbolAVL.insertar(2017,paquete1.hashMapInstancias);
+                    } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolR_N")) {
+                        paquete1.columnaPorCrear.arbolR_N = new ArbolR_N();
+                    }
+                }
                 esquema.Columnas.put(paquete1.nombreColumna, paquete1.columnaPorCrear);
             }
         }
