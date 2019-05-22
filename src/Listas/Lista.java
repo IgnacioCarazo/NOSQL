@@ -111,6 +111,21 @@ public class Lista<T> {
         }
        return null;
     }
+    public boolean obtenerboolHashmap(Integer ID, String nombreID){
+        Nodo tmp = first;
+        HashMap<String, Atributo> hashmap = null;
+        while (tmp != null) {
+            hashmap = (HashMap) tmp.getDato();
+            if (hashmap.get(nombreID).valueInt != null){
+                if (ID == hashmap.get(nombreID).valueInt){
+                    return true;
+                } else{
+                    tmp = tmp.getNext();
+                }
+            }
+        }
+        return false;
+    }
     //Obtiene un esquema de la listaEsquemas a partir de su nombre de la lista de Esquemas
     public Esquema obtenerEsquema(String esquemaPorObtener) {
         Nodo tmp = first;

@@ -22,7 +22,7 @@ class Nodo{
 
 public class ArbolAVL {
 
-    private Nodo raiz;
+    public Nodo raiz;
 
     public ArbolAVL() {
     }
@@ -33,7 +33,7 @@ public class ArbolAVL {
         return instancia;
     }
 
-    private Nodo buscarElemento(Nodo current, int id) {
+    public Nodo buscarElemento(Nodo current, int id) {
         if (current == null) {
             return null;
         } else if (current.id == id) {
@@ -87,7 +87,7 @@ public class ArbolAVL {
         return temporal;
     }
 
-    private Nodo insertar(Nodo nuevoNodo, Nodo subArbol) {
+    public Nodo insertar(Nodo nuevoNodo, Nodo subArbol) {
         Nodo nuevoPadre = subArbol;
         if (nuevoNodo.id < subArbol.id) {
             if (subArbol.hijoIzq == null) {
@@ -143,7 +143,7 @@ public class ArbolAVL {
         inOrden(raiz);
     }
 
-    private void inOrden(Nodo enCurso){
+    public void inOrden(Nodo enCurso){
         if(enCurso!=null){
             inOrden(enCurso.hijoIzq);
             System.out.println(enCurso.id);
@@ -155,7 +155,7 @@ public class ArbolAVL {
         preOrden(raiz);
     }
 
-    private void preOrden(Nodo enCurso){
+    public void preOrden(Nodo enCurso){
         if(enCurso!=null){
             System.out.println(enCurso.id);
             preOrden(enCurso.hijoIzq);
@@ -167,7 +167,7 @@ public class ArbolAVL {
         postOrden(raiz);
     }
 
-    private void postOrden(Nodo enCurso){
+    public void postOrden(Nodo enCurso){
         if(enCurso!=null){
             postOrden(enCurso.hijoIzq);
             postOrden(enCurso.hijoDer);

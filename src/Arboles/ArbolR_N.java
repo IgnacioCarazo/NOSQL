@@ -3,23 +3,24 @@ package Arboles;
 /*
  *  Java Program to Implement Red Black Tree
  */
-
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import main.Atributo;
 
 import java.util.HashMap;
 import java.util.Scanner;
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 /* Class Node */
 /* Class ArbolR_N */
 public class ArbolR_N
 {
 
-    private RedBlackNode current;
-    private RedBlackNode parent;
-    private RedBlackNode grand;
-    private RedBlackNode great;
-    private RedBlackNode header;
-    private static RedBlackNode nullNode;
+    public RedBlackNode current;
+    public RedBlackNode parent;
+    public RedBlackNode grand;
+    public RedBlackNode great;
+    public RedBlackNode header;
+    public static RedBlackNode nullNode;
     /* static initializer for nullNode */
     static
     {
@@ -75,7 +76,7 @@ public class ArbolR_N
             parent.right = current;
         handleReorient( id );
     }
-    private void handleReorient(int item)
+    public void handleReorient(int item)
     {
         // Do the color flip
         current.color = RED;
@@ -94,7 +95,7 @@ public class ArbolR_N
         // Make root black
         header.right.color = BLACK;
     }
-    private RedBlackNode rotate(int item, RedBlackNode parent)
+    public RedBlackNode rotate(int item, RedBlackNode parent)
     {
         if(item < parent.Id)
             return parent.left = item < parent.left.Id ? rotateWithLeftChild(parent.left) : rotateWithRightChild(parent.left) ;
@@ -102,7 +103,7 @@ public class ArbolR_N
             return parent.right = item < parent.right.Id ? rotateWithLeftChild(parent.right) : rotateWithRightChild(parent.right);
     }
     /* Rotate binary tree node with left child */
-    private RedBlackNode rotateWithLeftChild(RedBlackNode k2)
+    public RedBlackNode rotateWithLeftChild(RedBlackNode k2)
     {
         RedBlackNode k1 = k2.left;
         k2.left = k1.right;
@@ -110,7 +111,7 @@ public class ArbolR_N
         return k1;
     }
     /* Rotate binary tree node with right child */
-    private RedBlackNode rotateWithRightChild(RedBlackNode k1)
+    public RedBlackNode rotateWithRightChild(RedBlackNode k1)
     {
         RedBlackNode k2 = k1.right;
         k1.right = k2.left;
@@ -122,7 +123,7 @@ public class ArbolR_N
     {
         return countNodes(header.right);
     }
-    private int countNodes(RedBlackNode r)
+    public int countNodes(RedBlackNode r)
     {
         if (r == nullNode)
             return 0;
@@ -139,7 +140,7 @@ public class ArbolR_N
     {   RedBlackNode nodo = search(header.right, val);
         return nodo.hashMap;
     }
-    private RedBlackNode search(RedBlackNode r, int val)
+    public RedBlackNode search(RedBlackNode r, int val)
     {
         boolean found = false;
         while ((r != nullNode) && !found)
@@ -163,7 +164,7 @@ public class ArbolR_N
     {
         inorder(header.right);
     }
-    private void inorder(RedBlackNode r)
+    public void inorder(RedBlackNode r)
     {
         if (r != nullNode)
         {
@@ -180,7 +181,7 @@ public class ArbolR_N
     {
         preorder(header.right);
     }
-    private void preorder(RedBlackNode r)
+    public void preorder(RedBlackNode r)
     {
         if (r != nullNode)
         {
@@ -197,7 +198,7 @@ public class ArbolR_N
     {
         postorder(header.right);
     }
-    private void postorder(RedBlackNode r)
+    public void postorder(RedBlackNode r)
     {
         if (r != nullNode)
         {

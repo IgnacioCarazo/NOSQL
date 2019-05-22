@@ -24,7 +24,7 @@ public class Paquete implements Serializable {
     public String columnaNuevoNombre;
 
     public HashMap<String,Atributo>  hashMapInstancias;
-
+    public Integer valorID;
 
     public Paquete() {
     }

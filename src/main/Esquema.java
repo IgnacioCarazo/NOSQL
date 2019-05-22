@@ -17,6 +17,7 @@ public class Esquema{
     public HashMap<String, Atributo> Columnas;
     // La lista de instancias del esquema
     public Lista<HashMap> Datos;
+    public String ID;
 
 
     public Esquema(String nombreEsquema) {
