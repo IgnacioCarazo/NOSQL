@@ -4,7 +4,6 @@ package main;
 import Arboles.ArbolAVL;
 import Arboles.ArbolR_N;
 import Arboles.BinaryTree;
-import Arboles.RedBlackTree;
 
 import java.io.*;
 import java.net.Socket;
@@ -90,13 +89,14 @@ public class HiloServidor extends Thread {
             // Se crea un nuevo objeto esquema con su respectivo nombre\
             Esquema nuevoEsquema = new Esquema(paquete1.esquema);
             // Agrega el esquema creado a la base de datos en la que se encuentran todos los esquemas
-                if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolBinario")){
+                if (paquete1.columnaPorCrear.tipoArbol == null){
+                }
+                else if (paquete1.columnaPorCrear.tipoArbol.equals("Binario")){
                     paquete1.columnaPorCrear.binaryTree = new BinaryTree();
                 } else if (paquete1.columnaPorCrear.tipoArbol.equals("AVL")){
                     paquete1.columnaPorCrear.arbolAVL = new ArbolAVL();
                 } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolR_N")){
-                    System.out.println(1);
-                    paquete1.columnaPorCrear.arbolR_N =  new RedBlackTree();
+                    paquete1.columnaPorCrear.arbolR_N =  new ArbolR_N();
                 }
                 nuevoEsquema.Columnas.put(paquete1.nombreID, paquete1.columnaPorCrear);
                 nuevoEsquema.ID = paquete1.nombreID;
@@ -134,12 +134,12 @@ public class HiloServidor extends Thread {
             if (!esquema.Columnas.containsKey(paquete1.nombreColumna)) {
                 if (paquete1.columnaPorCrear.tipo.equals("Integer")) {
                     if (paquete1.columnaPorCrear.tipoArbol == null){
-                    } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolBinario")) {
+                    } else if (paquete1.columnaPorCrear.tipoArbol.equals("Binario")) {
                         paquete1.columnaPorCrear.binaryTree = new BinaryTree();
                     } else if (paquete1.columnaPorCrear.tipoArbol.equals("AVL")) {
                         paquete1.columnaPorCrear.arbolAVL = new ArbolAVL();
                     } else if (paquete1.columnaPorCrear.tipoArbol.equals("ArbolR_N")) {
-                        paquete1.columnaPorCrear.arbolR_N = new RedBlackTree();
+                        paquete1.columnaPorCrear.arbolR_N = new ArbolR_N();
                     }
                 }
                 paquete1.columnaPorCrear.llave = false;
@@ -154,7 +154,7 @@ public class HiloServidor extends Thread {
                 if (esquema.Columnas.get(paquete1.nombreColumna).llave.equals(false)) {
                     // Mete a las columnas un nuevo key/value. Este tiene un nuevo nombre pero el mismo valor
                     // que el key que se quiere modificar
-                    esquema.Columnas.put(paquete1.columnaNuevoNombre, paquete1.columnaPorCrear);
+                    esquema.Columnas.put(paquete1.columnaNuevoNombre, esquema.Columnas.get(paquete1.nombreColumna));
                     esquema.Datos.editarColumna(paquete1.nombreColumna, paquete1.columnaNuevoNombre, paquete1.columnaPorCrear);
                     // Se elimina el key/value que se queria modificar.
                     esquema.Columnas.remove(paquete1.nombreColumna);
@@ -165,7 +165,7 @@ public class HiloServidor extends Thread {
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
             // Asi sabe sobre que esquema debe trabajar
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
-            if (esquema.Columnas.get(paquete1.columnaPorBorrar).llave.equals(false)) {
+            if (esquema.Columnas.get(paquete1.columnaPorBorrar).llave == false) {
                 esquema.Columnas.remove(paquete1.columnaPorBorrar);
                 esquema.Datos.eliminarColumna(paquete1.columnaPorBorrar);
             }
@@ -175,23 +175,14 @@ public class HiloServidor extends Thread {
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
             // Asi sabe sobre que esquema debe trabajar
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
-            if (!esquema.Datos.obtenerboolHashmap(paquete1.hashMapInstancias.get(esquema.ID).valueInt,esquema.ID)){
-                esquema.Datos.agregarInicio(paquete1.hashMapInstancias);
-                if (paquete1.hashMapInstancias.get(esquema.ID).tipoArbol.equals("ArbolBinario")) {
-                    paquete1.hashMapInstancias.get(esquema.ID).binaryTree.insert(paquete1.hashMapInstancias.get(esquema.ID).valueInt,paquete1.hashMapInstancias);
-                } else if (paquete1.hashMapInstancias.get(esquema.ID).tipoArbol.equals("AVL")) {
-                    paquete1.hashMapInstancias.get(esquema.ID).arbolAVL.insertar(paquete1.hashMapInstancias.get(esquema.ID).valueInt,paquete1.hashMapInstancias);
-                } else if (paquete1.hashMapInstancias.get(esquema.ID).tipoArbol.equals("Rojo-Negro")) {
-                }
-            }
-
-
-
+//            if (!esquema.Datos.obtenerboolHashmap(paquete1.hashMapInstancias.get(esquema.ID).valueInt,esquema.ID)){
+            esquema.Datos.agregarInicio(paquete1.hashMapInstancias);
         }
         if(paquete1.accion.equals("MODIFICAR_INSTANCIAS")){
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"
             // Asi sabe sobre que esquema debe trabajar
             Esquema esquema = ServidorGUI.esquemasCreados.obtenerEsquema(paquete1.esquema);
+            esquema.Datos.obtenerHashmap(paquete1.valorID,esquema.ID);
         }
         if(paquete1.accion.equals("ELIMINAR_INSTANCIAS")){
             // Obtiene el esquema, conforme al valor entrante de "paquete1.esquema"

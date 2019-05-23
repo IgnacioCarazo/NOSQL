@@ -3,12 +3,10 @@ package Arboles;
 /*
  *  Java Program to Implement Red Black Tree
  */
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import main.Atributo;
 
 import java.util.HashMap;
 import java.util.Scanner;
-@JsonIgnoreProperties(ignoreUnknown = true)
 
 /* Class Node */
 /* Class ArbolR_N */
@@ -35,7 +33,8 @@ public class ArbolR_N
 
     public ArbolR_N()
     {
-        header = new RedBlackNode(0, new HashMap());
+        HashMap hashMap = new HashMap();
+        header = new RedBlackNode(0, hashMap);
         header.left = nullNode;
         header.right = nullNode;
     }
@@ -52,7 +51,6 @@ public class ArbolR_N
     /* Function to insert item */
     public void insert(int id, HashMap hashMap)
     {
-        System.out.println(1);
         current = parent = grand = header;
         nullNode.Id = id;
         while (current.Id != id)

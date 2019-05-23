@@ -18,6 +18,7 @@ public class Esquema{
     // La lista de instancias del esquema
     public Lista<HashMap> Datos;
     public String ID;
+    public Lista<String> ListaID;
 
 
     public Esquema(String nombreEsquema) {

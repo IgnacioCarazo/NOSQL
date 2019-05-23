@@ -111,18 +111,20 @@ public class Lista<T> {
         }
        return null;
     }
+
+
+
     public boolean obtenerboolHashmap(Integer ID, String nombreID){
         Nodo tmp = first;
         HashMap<String, Atributo> hashmap = null;
         while (tmp != null) {
-            hashmap = (HashMap) tmp.getDato();
-            if (hashmap.get(nombreID).valueInt != null){
+            hashmap = (HashMap<String, Atributo>) tmp.getDato();
                 if (ID == hashmap.get(nombreID).valueInt){
                     return true;
                 } else{
                     tmp = tmp.getNext();
                 }
-            }
+
         }
         return false;
     }

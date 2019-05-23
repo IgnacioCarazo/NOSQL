@@ -23,6 +23,7 @@ class Nodo{
 public class ArbolAVL {
 
     public Nodo raiz;
+    public boolean duplicado;
 
     public ArbolAVL() {
     }
@@ -116,7 +117,9 @@ public class ArbolAVL {
                 }
             }
         } else {
-            System.out.println("Nodo Duplicado.");
+            System.out.println("DUPLICADO");
+            duplicado();
+
         }
         if (subArbol.hijoIzq == null && subArbol.hijoDer != null) {
             subArbol.factorEqulibrio = subArbol.hijoDer.factorEqulibrio+1;
@@ -127,6 +130,14 @@ public class ArbolAVL {
             subArbol.factorEqulibrio = Math.max(obtenerFE(subArbol.hijoIzq),obtenerFE(subArbol.hijoDer))+1;
         }
         return nuevoPadre;
+    }
+
+    public boolean duplicado(){
+        return this.duplicado = true;
+    }
+
+    public void setDuplicado(boolean duplicado) {
+        this.duplicado = duplicado;
     }
 
     public void insertar(int id, HashMap hashMap){
@@ -173,6 +184,17 @@ public class ArbolAVL {
             postOrden(enCurso.hijoDer);
             System.out.println(enCurso.id);
         }
+    }
+
+    public static void main(String[] args) {
+        ArbolAVL arbol = new ArbolAVL();
+
+        arbol.insertar(5,new HashMap());
+        arbol.insertar(8,new HashMap());
+        arbol.insertar(5,new HashMap());
+
+
+        arbol.preOrden();
     }
 
 }

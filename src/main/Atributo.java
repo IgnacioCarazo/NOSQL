@@ -3,7 +3,6 @@ package main;
 import Arboles.ArbolAVL;
 import Arboles.ArbolR_N;
 import Arboles.BinaryTree;
-import Arboles.RedBlackTree;
 
 public class Atributo {
     public double valueDouble;
@@ -15,7 +14,7 @@ public class Atributo {
 
     public String tipoArbol;
     public ArbolAVL arbolAVL;
-    public RedBlackTree arbolR_N;
+    public ArbolR_N arbolR_N;
     public BinaryTree binaryTree;
 
     public Boolean esJoin;

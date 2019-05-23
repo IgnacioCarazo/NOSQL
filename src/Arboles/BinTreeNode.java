@@ -1,13 +1,50 @@
 package Arboles;
 
-public class BinTreeNode<K extends Comparable<K>,V> {
-    public BinTreeNode<K,V> left;
-    public BinTreeNode<K,V> right;
-    public K key;
-    public V value;
+import java.util.HashMap;
 
-    public BinTreeNode(K key, V value) {
-        this.key = key;
-        this.value = value;
+public class BinTreeNode {
+    public BinTreeNode left;
+    public BinTreeNode right;
+    public int ID;
+    public HashMap hashMap;
+
+    public BinTreeNode getLeft() {
+        return left;
+    }
+
+    public BinTreeNode getRight() {
+        return right;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public HashMap getHashMap() {
+        return hashMap;
+    }
+
+    public void setLeft(BinTreeNode left) {
+        this.left = left;
+    }
+
+    public void setRight(BinTreeNode right) {
+        this.right = right;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setHashMap(HashMap hashMap) {
+        this.hashMap = hashMap;
+    }
+
+    public BinTreeNode(int ID, HashMap hashMap) {
+        this.ID = ID;
+        this.hashMap = hashMap;
+    }
+    public BinTreeNode(){
+
     }
 }
